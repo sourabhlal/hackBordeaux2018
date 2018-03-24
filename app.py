@@ -1,4 +1,4 @@
-from flask import Flask, request, abort
+from flask import Flask, request, abort, render_template
 from datetime import datetime
 app = Flask(__name__)
 
@@ -13,9 +13,10 @@ def homepage():
     <img src="http://loremflickr.com/600/400" />
     """.format(time=the_time)
 
-@app.route('/hello', methods=['GET'])
-def hello():
-    return 'hello world! we are at hack bordeaux', 200
+@app.route('/play', methods=['GET'])
+def joinGame():
+    return render_template('playGame.html', name="john")
+    # return 'hello world! we are at hack bordeaux', 200
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -24,6 +25,7 @@ def webhook():
         return '', 200
     else:
         abort(400)
-        
+
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
+l 
