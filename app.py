@@ -15,7 +15,7 @@ def homepage():
 
 @app.route('/play', methods=['GET'])
 def joinGame():
-    return render_template('playGame.html', name="john")
+    return render_template('client_template.html', name="john")
     # return 'hello world! we are at hack bordeaux', 200
 
 @app.route('/webhook', methods=['POST'])
@@ -28,4 +28,3 @@ def webhook():
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
-    
