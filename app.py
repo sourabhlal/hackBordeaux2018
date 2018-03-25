@@ -77,7 +77,7 @@ def homepage():
 def joinGame():
     template_variables = {}
     template_variables["clues"] = [c for c in clues if c['discovered'] == True]
-    template_variables["current_view"] = current_view
+    template_variables["current_view"] = current_view["filename"]
     if len([d for d in clues if d['discovered'] == False])%2 == 1:
         template_variables["clue_odd"] = False
     else:
@@ -91,7 +91,12 @@ pp = pprint.PrettyPrinter(indent=4)
 def webhook():
     if request.method == 'POST':
         j = json.dumps(request.json)
-        pp.pprint(json.loads(j)["result"]["metadata"]["intentName"])
+        found = json.loads(j)["result"]["metadata"]["intentName"]
+        tempList = clues+views
+        for i in tempList:
+            if i["id"] == found:
+                i["discovered"] = True
+                current_view = i
         return '', 200
     else:
         abort(400)
