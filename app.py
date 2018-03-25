@@ -60,7 +60,11 @@ clues=[{"id":"Bed",
         "discovered":False
         }]
 
-current_view={}
+current_view={"id":"Start_Game",
+        "filename":"images/bedroom.jpg",
+        "title":"Bedroom",
+        "discovered":False
+        }
 
 @app.route('/')
 def homepage():
