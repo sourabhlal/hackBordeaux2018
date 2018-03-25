@@ -93,6 +93,8 @@ pp = pprint.PrettyPrinter(indent=4)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    global current_view
+    print (current_view)
     if request.method == 'POST':
         j = json.dumps(request.json)
         found = json.loads(j)["result"]["metadata"]["intentName"]
