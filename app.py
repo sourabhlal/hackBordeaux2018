@@ -84,10 +84,14 @@ def joinGame():
         template_variables["clue_odd"] = True
     return render_template('client_template.html', data=template_variables)
 
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     if request.method == 'POST':
-        j = json.loads(request.json)
+        j = json.dumps(request.json)
+        pp.pprint(json.loads(j)["result"]["metadata"]["intentName"])
         return '', 200
     else:
         abort(400)
