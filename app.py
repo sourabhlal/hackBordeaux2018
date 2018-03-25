@@ -77,6 +77,13 @@ def homepage():
     <img src="http://loremflickr.com/600/400" />
     """.format(time=the_time)
 
+@app.route('/refreshView')
+def refreshView():
+    ret = {}
+    ret["current_view"] = '/static/'+current_view["filename"]
+    ret["discovered_clues"] = ["/static/"+c["filename"] for c in clues if c['discovered'] == True]
+    return json.dumps(ret)
+
 @app.route('/play', methods=['GET'])
 def joinGame():
     template_variables = {}
