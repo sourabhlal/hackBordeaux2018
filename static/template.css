@@ -7,6 +7,13 @@
 }
 
 .clue-img{
-	height: 100px;
-	width: 100px;
+	max-height: 150px;
+	width: 100%;
+}
+
+.col{
+	padding-right: 2px;
+	padding-left: 2px;
+	padding-bottom: 2px;
+	padding-top: 2px;
 }

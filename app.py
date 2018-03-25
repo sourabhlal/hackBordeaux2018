@@ -1,9 +1,66 @@
 from flask import Flask, request, abort, render_template
 from datetime import datetime
+import json
 app = Flask(__name__)
 
-clues = []
-views = []
+views=[{"id":"Restart_game",
+        "filename":"images/bedroom.jpg",
+        "title":"Bedroom",
+        "discovered":False
+        },
+        {"id":"Start_Game",
+        "filename":"images/bedroom.jpg",
+        "title":"Bedroom",
+        "discovered":False
+        },
+        {"id":"Hallway",
+        "filename":"images/hallway.png",
+        "title":"Hallway",
+        "discovered":False
+        },
+        {"id":"Elevator",
+        "filename":"images/elevator_inside.jpg",
+        "title":"Elevator",
+        "discovered":False
+        },
+        {"id":"Staircase",
+        "filename":"images/staircase.jpg",
+        "title":"Staircase",
+        "discovered":False
+        },
+        {"id":"Exit",
+        "filename":"images/exit_success.jpg",
+        "title":"Exit",
+        "discovered":False
+        }]
+
+clues=[{"id":"Bed",
+        "filename":"images/ekino.jpg",
+        "title":"Paper",
+        "discovered":False
+        },
+        {"id":"Mobile_phone",
+        "filename":"images/phone.jpg",
+        "title":"Mobile phone",
+        "discovered":False
+        },
+        {"id":"Sock",
+        "filename":"images/sock.jpg",
+        "title":"Sock",
+        "discovered":False
+        },
+        {"id":"Visit_card",
+        "filename":"images/visit_card.jpg",
+        "title":"Visit card",
+        "discovered":False
+        },
+        {"id":"Wardrobe",
+        "filename":"images/try_again.jpg",
+        "title":"Paper",
+        "discovered":False
+        }]
+
+current_view={}
 
 @app.route('/')
 def homepage():
@@ -19,18 +76,18 @@ def homepage():
 @app.route('/play', methods=['GET'])
 def joinGame():
     template_variables = {}
-    template_variables["clues"] = clues
-    template_variables["views"] = views
-    if len([d for d in clues if d['discoverd'] == False])%2 == 1:
-        template_variables["clue_odd"] = True
-    else:
+    template_variables["clues"] = [c for c in clues if c['discovered'] == True]
+    template_variables["current_view"] = current_view
+    if len([d for d in clues if d['discovered'] == False])%2 == 1:
         template_variables["clue_odd"] = False
-    return render_template('client_template.html', tv=template_variables)
+    else:
+        template_variables["clue_odd"] = True
+    return render_template('client_template.html', data=template_variables)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
     if request.method == 'POST':
-        print(request.json)
+        j = json.loads(request.json)
         return '', 200
     else:
         abort(400)
